@@ -7,7 +7,7 @@ use 5.008001;
 use strict;
 #use warnings;
 
-our $VERSION='0.00_01';
+our $VERSION='0.01';
 use Error qw(:try);
 
 our $DATA;
@@ -476,8 +476,8 @@ sub parse_byte_stream ($$$$;$$) {
 
     ## Step 6
     require HTML::HTML5::Parser::Charset::UniversalCharDet;
-    $charset_name = HTML::HTML5::Parser::Charset::UniversalCharDet->detect_byte_string
-        ($byte_buffer);
+    $charset_name = HTML::HTML5::Parser::Charset::UniversalCharDet->detect_byte_string($byte_buffer)
+		if $byte_buffer;
     if (defined $charset_name) {
       $charset = HTML::HTML5::Parser::Charset::Info->get_by_html_name ($charset_name);
 
@@ -677,7 +677,7 @@ sub parse_char_stream ($$$;$$) {
   ## Confidence: irrelevant.
   $self->{confident} = 1 unless exists $self->{confident};
 
-  $self->{document}->input_encoding ($self->{input_encoding})
+  $self->{document}->setEncoding($self->{input_encoding})
       if defined $self->{input_encoding};
 ## TODO: |{input_encoding}| is needless?
 
@@ -2137,22 +2137,42 @@ sub _tree_construction_main ($) {
     
         for my $attr_name (keys %{  $token->{attributes}}) {
           my $attr_t =   $token->{attributes}->{$attr_name};
-          my $attr = $self->{document}->createAttributeNS( #TOBY-TODO
-          @{
-            $foreign_attr_xname->{$attr_name} ||
-            [undef, [undef,
-                     ($nsuri) eq $SVG_NS ?
-                         ($svg_attr_name->{$attr_name} || $attr_name) :
-                     ($nsuri) eq $MML_NS ?
-                         ($attr_name eq 'definitionurl' ?
-                             'definitionURL' : $attr_name) :
-                         $attr_name]]
-          }
-        );
-          $attr->setValue ($attr_t->{value});
-          DATA($attr, manakai_source_line => $attr_t->{line});
-          DATA($attr, manakai_source_column => $attr_t->{column});
-          $el->setAttributeNodeNS ($attr);
+          my $attr;
+			 if (defined $foreign_attr_xname->{ $attr_name })
+			 {
+				 my $xmlnsuri = $foreign_attr_xname->{ $attr_name }->[0];
+				 my $qname = join ':', @{$foreign_attr_xname->{ $attr_name }->[1]};
+				 $qname =~ s/(^:)|(:$)//;
+				 $attr = $self->{document}->createAttributeNS($xmlnsuri, $qname);
+			 }
+			 elsif ($nsuri eq $MML_NS && $attr_name eq 'definitionurl')
+			 {
+				 $attr = $self->{document}->createAttributeNS($MML_NS, 'definitionURL');
+			 }
+			 elsif ($nsuri eq $MML_NS )
+			 {
+				 $attr = $self->{document}->createAttributeNS($MML_NS, $attr_name);
+			 }
+			 elsif ($nsuri eq $SVG_NS )
+			 {
+				 $attr = $self->{document}->createAttributeNS(
+					$SVG_NS, ($svg_attr_name->{$attr_name} || $attr_name));
+			 }
+			 unless ($attr)
+			 {
+				 $attr = $self->{document}->createAttributeNS($nsuri, $attr_name);
+			 }
+			 unless ($attr)
+			 {
+				 $attr = $self->{document}->createAttribute($attr_name);
+			 }
+			 if ($attr)
+			 {
+				 $attr->setValue ($attr_t->{value});
+				 DATA($attr, manakai_source_line => $attr_t->{line});
+				 DATA($attr, manakai_source_column => $attr_t->{column});
+				 $el->setAttributeNodeNS ($attr);
+			 }
         }
       
         DATA($el, manakai_source_line => $token->{line})
@@ -2660,8 +2680,7 @@ sub _tree_construction_main ($) {
     {
       my $el;
       
-      $el = $self->{document}->createElementNS
-        ($HTML_NS, [undef,  $token->{tag_name}]);
+      $el = $self->{document}->createElementNS($HTML_NS, $token->{tag_name});
     
         for my $attr_name (keys %{  $token->{attributes}}) {
           my $attr_t =   $token->{attributes}->{$attr_name};
@@ -2756,7 +2775,7 @@ sub _tree_construction_main ($) {
     
         for my $attr_name (keys %{  $token->{attributes}}) {
           my $attr_t =   $token->{attributes}->{$attr_name};
-          my $attr = $self->{document}->createAttributeNS (undef, [undef, $attr_name]);
+          my $attr = $self->{document}->createAttributeNS (undef, $attr_name);
           $attr->setValue ($attr_t->{value});
           DATA($attr, manakai_source_line => $attr_t->{line});
           DATA($attr, manakai_source_column => $attr_t->{column});
@@ -3833,7 +3852,7 @@ sub _tree_construction_main ($) {
     
         for my $attr_name (keys %{  $token->{attributes}}) {
           my $attr_t =   $token->{attributes}->{$attr_name};
-          my $attr = $self->{document}->createAttributeNS(undef, [undef, $attr_name]);
+          my $attr = $self->{document}->createAttributeNS(undef, $attr_name);
           $attr->setValue($attr_t->{value});
           DATA($attr, manakai_source_line => $attr_t->{line});
           DATA($attr, manakai_source_column => $attr_t->{column});
@@ -5321,8 +5340,8 @@ sub _tree_construction_main ($) {
     
         for my $attr_name (keys %{  $token->{attributes}}) {
           my $attr_t =   $token->{attributes}->{$attr_name};
-          my $attr = $self->{document}->createAttributeNS (undef, [undef, $attr_name]);
-          $attr->setValue ($attr_t->{value});
+          my $attr = $self->{document}->createAttributeNS(undef, $attr_name);
+          $attr->setValue($attr_t->{value});
           DATA($attr, manakai_source_line => $attr_t->{line});
           DATA($attr, manakai_source_column => $attr_t->{column});
           $el->setAttributeNodeNS ($attr);
@@ -5927,22 +5946,38 @@ sub _tree_construction_main ($) {
     
         for my $attr_name (keys %{  $token->{attributes}}) {
           my $attr_t =   $token->{attributes}->{$attr_name};
-          my $attr = $self->{document}->create_attribute_ns ( #TOBY-TODO
-          @{
-            $foreign_attr_xname->{$attr_name} ||
-            [undef, [undef,
-                     ($token->{tag_name} eq 'math' ? $MML_NS : $SVG_NS) eq $SVG_NS ?
-                         ($svg_attr_name->{$attr_name} || $attr_name) :
-                     ($token->{tag_name} eq 'math' ? $MML_NS : $SVG_NS) eq $MML_NS ?
-                         ($attr_name eq 'definitionurl' ?
-                             'definitionURL' : $attr_name) :
-                         $attr_name]]
-          }
-        );
-          $attr->setValue($attr_t->{value});
-          DATA($attr, manakai_source_line => $attr_t->{line});
-          DATA($attr, manakai_source_column => $attr_t->{column});
-          $el->setAttributeNodeNS ($attr);
+          my $attr;
+			 if (defined $foreign_attr_xname->{ $attr_name })
+			 {
+				 my $xmlnsuri = $foreign_attr_xname->{ $attr_name }->[0];
+				 my $qname = join ':', @{$foreign_attr_xname->{ $attr_name }->[1]};
+				 $qname =~ s/(^:)|(:$)//;
+				 $attr = $self->{document}->createAttributeNS($xmlnsuri, $qname);
+			 }
+			 elsif ($token->{tag_name} eq 'math' && $attr_name eq 'definitionurl')
+			 {
+				 $attr = $self->{document}->createAttributeNS($MML_NS, 'definitionURL');
+			 }
+			 elsif ($token->{tag_name} eq 'math')
+			 {
+				 $attr = $self->{document}->createAttributeNS($MML_NS, $attr_name);
+			 }
+			 elsif ($token->{tag_name} eq 'svg')
+			 {
+				 $attr = $self->{document}->createAttributeNS(
+					$SVG_NS, ($svg_attr_name->{$attr_name} || $attr_name));
+			 }
+			 unless ($attr)
+			 {
+				$attr = $self->{document}->createAttribute($attr_name);
+				}
+			if ($attr)
+			{
+				 $attr->setValue($attr_t->{value});
+				 DATA($attr, manakai_source_line => $attr_t->{line});
+				 DATA($attr, manakai_source_column => $attr_t->{column});
+				 $el->setAttributeNodeNS ($attr);
+			 }
         }
       
         DATA($el, manakai_source_line => $token->{line})
@@ -6041,7 +6076,7 @@ sub _tree_construction_main ($) {
     
         for my $attr_name (keys %{  $token->{attributes}}) {
           my $attr_t =   $token->{attributes}->{$attr_name};
-          my $attr = $self->{document}->createSttributeNS (undef, $attr_name);
+          my $attr = $self->{document}->createAttributeNS (undef, $attr_name);
           $attr->setValue ($attr_t->{value});
           DATA($attr, manakai_source_line => $attr_t->{line});
           DATA($attr, manakai_source_column => $attr_t->{column});
