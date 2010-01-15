@@ -6,7 +6,7 @@ HTML::HTML5::Parser - Parse HTML reliably with Perl.
 
 =head1 VERSION
 
-0.02
+0.03
 
 =head1 SYNOPSIS
 
@@ -30,11 +30,12 @@ use strict;
 use warnings;
 
 our $AUTOLOAD;
-our $VERSION = '0.02';
+our $VERSION = '0.03';
 
 use Carp;
 use HTML::HTML5::Parser::TagSoupParser;
 use LWP::UserAgent;
+use URI::file;
 use XML::LibXML;
 
 =head1 DESCRIPTION
@@ -49,8 +50,6 @@ Changes include:
 =item * Constructs an XML::LibXML::Document as the result of parsing.
 
 =item * Via bundling and modifications, removed external dependencies on non-CPAN packages.
-
-NOTE: This module uses Inline::Python, including the Python "chardet" package which can be installed using easy_install.
 
 =back
 
@@ -409,7 +408,7 @@ Toby Inkster, E<lt>tobyink@cpan.orgE<gt>
 
 Copyright (C) 2007-2009 by Wakaba
 
-Copyright (C) 2009 by Toby Inkster
+Copyright (C) 2009-2010 by Toby Inkster
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself, either Perl version 5.8.1 or,
