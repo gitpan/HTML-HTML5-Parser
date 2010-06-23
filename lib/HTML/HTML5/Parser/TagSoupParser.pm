@@ -3,13 +3,13 @@ package HTML::HTML5::Parser::TagSoupParser;
 # This is a port of the Whatpm::HTML package away from dependencies
 # on manakai, and towards CPAN and XML::LibXML.
 
-# caught up to Whatpm::HTML rv cf2c0df8a6dfb50fee923dfb21b14c83f282ccdc.
+# caught up to Whatpm::HTML rv cf2c0df8a6dfb50fee923dfb21b14c83f282ccdc, 23/6/2010.
 
 use 5.008001;
 use strict;
 #use warnings;
 
-our $VERSION='0.04';
+our $VERSION='0.100';
 use Error qw(:try);
 
 our $DATA;
@@ -5688,10 +5688,13 @@ sub _tree_construction_main ($) {
         for my $attr_name (keys %{  $token->{attributes}}) {
           my $attr_t =   $token->{attributes}->{$attr_name};
           my $attr = $self->{document}->createAttributeNS (undef, $attr_name);
-          $attr->setValue($attr_t->{value});
-          DATA($attr, manakai_source_line => $attr_t->{line});
-          DATA($attr, manakai_source_column => $attr_t->{column});
-          $el->setAttributeNodeNS ($attr);
+          if ($attr)
+          {
+            $attr->setValue($attr_t->{value});
+            DATA($attr, manakai_source_line => $attr_t->{line});
+            DATA($attr, manakai_source_column => $attr_t->{column});
+            $el->setAttributeNodeNS ($attr);
+          }
         }
       
         DATA($el, manakai_source_line => $token->{line})
@@ -6391,7 +6394,7 @@ sub _tree_construction_main ($) {
             last INSCOPE;
           }
           elsif ($token->{tag_name} eq 'li' and
-                   {ul => 1, ol => 1}->{$node->[0]->manakai_local_name}) {
+                   {ul => 1, ol => 1}->{$node->[0]->localname}) {
             ## Has an element in list item scope
             
             last INSCOPE;
