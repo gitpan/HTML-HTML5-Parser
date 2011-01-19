@@ -4,10 +4,6 @@ package HTML::HTML5::Parser;
 
 HTML::HTML5::Parser - parse HTML reliably
 
-=head1 VERSION
-
-0.100
-
 =head1 SYNOPSIS
 
   use HTML::HTML5::Parser;
@@ -30,7 +26,7 @@ use strict;
 use warnings;
 
 our $AUTOLOAD;
-our $VERSION = '0.101';
+our $VERSION = '0.102';
 
 use Carp;
 use HTML::HTML5::Parser::TagSoupParser;
@@ -364,9 +360,8 @@ In scalar context, C<source_line> returns the line number of the
 source code that started a particular node (element, attribute or
 comment).
 
-In list context, returns a line/column pair.
-
-THIS FUNCTION USUALLY DOESN'T WORK.
+In list context, returns a line/column pair. (Tab characters count as
+one column, not eight.)
 
 =cut
 
@@ -406,7 +401,7 @@ Toby Inkster, E<lt>tobyink@cpan.orgE<gt>
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright (C) 2007-2009 by Wakaba
+Copyright (C) 2007-2010 by Wakaba
 
 Copyright (C) 2009-2010 by Toby Inkster
 
