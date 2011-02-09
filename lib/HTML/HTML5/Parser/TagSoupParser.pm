@@ -10,7 +10,7 @@ use 5.008001;
 use strict;
 #use warnings;
 
-our $VERSION='0.102';
+our $VERSION='0.103';
 use Error qw(:try);
 
 BEGIN
@@ -604,8 +604,8 @@ sub parse_byte_stream ($$$$;$$) {
          byte_buffer => \ $buffer->{buffer});
     
     if ($char_stream) { # if supported
-      if ($charset->{category} & Message::Charset::Info::CHARSET_CATEGORY_ASCII_COMPAT () or
-          $charset->{category} & Message::Charset::Info::CHARSET_CATEGORY_UTF16 ()) {
+      if ($charset->{category} & HTML::HTML5::Parser::Charset::Info::CHARSET_CATEGORY_ASCII_COMPAT () or
+          $charset->{category} & HTML::HTML5::Parser::Charset::Info::CHARSET_CATEGORY_UTF16 ()) {
         #
       } else {
         return;
@@ -6483,9 +6483,10 @@ sub _tree_construction_main ($) {
       
       $el = $self->{document}->createElementNS((HTML_NS), $token->{tag_name});
     
-        for my $attr_name (keys %{  $token->{attributes}}) {
+        ATR: for my $attr_name (keys %{  $token->{attributes}}) {
           my $attr_t =   $token->{attributes}->{$attr_name};
           my $attr = $self->{document}->createAttributeNS (undef, $attr_name);
+			 next ATR unless ref($attr);
           $attr->setValue ($attr_t->{value});
           DATA($attr, manakai_source_line => $attr_t->{line});
           DATA($attr, manakai_source_column => $attr_t->{column});
