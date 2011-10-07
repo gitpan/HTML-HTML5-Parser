@@ -1,7 +1,3 @@
-############################################################################
-## Changes for HTML::HTML5::Parser #########################################
-############################################################################
-
 HTML-HTML5-Parser
 =================
 
@@ -10,22 +6,32 @@ Home page:    <https://metacpan.org/release/HTML-HTML5-Parser>
 Bug tracker:  <http://rt.cpan.org/Dist/Display.html?Queue=HTML-HTML5-Parser>
 Maintainer:   Toby Inkster <mailto:tobyink@cpan.org>
 
-0.104 [2011-09-22]
+0.105  2011-10-07
+
+ - HTML::HTML5::Parser::Error overloads stringification.
+ - use HTML::HTML5::Entities
+ - (Addition) Bundle 'html5debug' script.
+ - (Packaging) Module::Package::RDF.
+
+0.104  2011-09-22
+
  - (Addition) Some error handling stuff.
  - (Addition) Support <track> element.
  - (Update) Catch up to revision d81fcb920a1a3c351149cd66a64bf1b8ae14a172
    (2011-08-21) upstream.
 
-0.103 [2011-02-09]
+0.103  2011-02-09
+
  - (Documentation Update) Copyright 2011.
  - (Bugfix) TagSoupParser.pm called a method that is renamed between this
    distribution and upstream using its upstream name.
 
-0.102 [2011-01-19]
+0.102  2011-01-19
+
  - (Update) Catch up to revision f2c921a886ab0b3dfb8d21b82525e98a4a921ad4
    (2010-10-11) upstream.
- - (Addition) Support <summary> element.
  - (Addition) Support <figcaption> element.
+ - (Addition) Support <summary> element.
  - (Addition) Allow <object> element to appear in <head> if document has an
    HTML4 doctype. This is a willful violation of the HTML5 parsing
    algorithm. (The <object> may have <param> elements as children, as well
@@ -37,28 +43,37 @@ Maintainer:   Toby Inkster <mailto:tobyink@cpan.org>
    there!)
  - (Bugfix) Fix source_line method.
 
-0.101 [2010-06-30]
+0.101  2010-06-30
+
  - (Bugfix) UTF-8 fix.
 
-0.100 [2010-06-23]
+0.100  2010-06-23
+
  - (Bugfix) Minor bugfixes.
 
-0.04 [2010-04-21]
+0.04  2010-04-21
+
  - (Update) Catch up to revision cf2c0df8a6dfb50fee923dfb21b14c83f282ccdc
    (2010-02-28) upstream.
 
-0.03 [2010-01-15]
+0.03  2010-01-15
+
  - (Packaging Update) Upgrade distribution to my new packaging regime
    (auto-generated changelogs, etc)
  - (Bugfix) Module didn't use URI::file properly.
  - (Documentation Update) Copyright 2010.
 
-0.02 [2009-12-16]
+0.02  2009-12-16
+
  - Replace Inline::Python encoding detection with weaker, but native Perl
    HTML::Encoding package.
  - (Addition Packaging) Bundle the html2xhtml tool.
 
-0.01 [2009-12-03] # Original version
+0.01  2009-12-03
+# Original version
 
-0.00_01 [2009-12-01] # Developer preview
+
+0.00_01  2009-12-01
+# Developer preview
+
 
