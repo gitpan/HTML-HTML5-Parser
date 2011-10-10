@@ -1,6 +1,6 @@
 package HTML::HTML5::Parser::Charset::Info;
 use strict;
-our $VERSION='0.105';
+our $VERSION='0.106';
 
 ## TODO: Certain encodings MUST NOT be implemented [HTML5].
 
