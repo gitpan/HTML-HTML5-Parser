@@ -10,7 +10,7 @@ use 5.008001;
 use strict;
 #use warnings;
 
-our $VERSION = '0.106';
+our $VERSION = '0.107';
 
 use Error qw(:try);
 use IO::Handle;

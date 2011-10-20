@@ -157,3 +157,16 @@ my:v_0-106
 		dcs:item
 			[ rdfs:label "Tokenizer.pm was still trying to require NamedEntityList.pm."@en ; a dcs:Bugfix ]
 		] .
+
+my:project :release my:v_0-107 .
+my:v_0-107
+	a               :Version ;
+	dc:issued       "2011-10-20"^^xsd:date ;
+	:revision       "0.107"^^xsd:string ;
+	:file-release   <http://backpan.cpan.org/authors/id/T/TO/TOBYINK/HTML-HTML5-Parser-0.107.tar.gz> ;
+	dcs:changeset [
+		dcs:versus my:v_0-106 ;
+		dcs:item   [ rdfs:label "parse_file wasn't accepting relative file names"@en ; a dcs:Bugfix ] ;
+		dcs:item   [ rdfs:label "html2xhtml now reads from STDIN by default."@en ; a dcs:Addition ] ;
+		dcs:item   [ rdfs:label "html2xhtml can output to a file."@en ; a dcs:Addition ]
+		] .

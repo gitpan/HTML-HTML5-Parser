@@ -30,6 +30,7 @@ requires:
   HTML::Encoding: 0.55
   HTML::HTML5::Entities: 0.001
   LWP::UserAgent: 0
+  Scalar::Util: 0
   XML::LibXML: 1.60
   perl: 5.8.1
 resources:
@@ -37,4 +38,4 @@ resources:
   homepage: https://metacpan.org/release/HTML-HTML5-Parser
   license: http://dev.perl.org/licenses/
   repository: http://goddamn.co.uk/svn-web/perlmods/browse/HTML-HTML5-Parser/
-version: 0.106
+version: 0.107

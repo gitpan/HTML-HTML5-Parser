@@ -6,6 +6,12 @@ Home page:    <https://metacpan.org/release/HTML-HTML5-Parser>
 Bug tracker:  <http://rt.cpan.org/Dist/Display.html?Queue=HTML-HTML5-Parser>
 Maintainer:   Toby Inkster <mailto:tobyink@cpan.org>
 
+0.107  2011-10-20
+
+ - (Addition) html2xhtml now reads from STDIN by default.
+ - (Addition) html2xhtml can output to a file.
+ - (Bugfix) parse_file wasn't accepting relative file names
+
 0.106  2011-10-10
 
  - (Bugfix) Tokenizer.pm was still trying to require NamedEntityList.pm.
@@ -19,19 +25,24 @@ Maintainer:   Toby Inkster <mailto:tobyink@cpan.org>
 
 0.104  2011-09-22
 
- - (Addition) Some error handling stuff.
- - (Addition) Support <track> element.
  - (Update) Catch up to revision d81fcb920a1a3c351149cd66a64bf1b8ae14a172
    (2011-08-21) upstream.
+ - (Addition) Some error handling stuff.
+ - (Addition) Support <track> element.
 
 0.103  2011-02-09
 
+ - (Documentation Update) Copyright 2011.
  - (Bugfix) TagSoupParser.pm called a method that is renamed between this
    distribution and upstream using its upstream name.
- - (Documentation Update) Copyright 2011.
 
 0.102  2011-01-19
 
+ - (Addition) Support <summary> element.
+ - (Update) Catch up to revision f2c921a886ab0b3dfb8d21b82525e98a4a921ad4
+   (2010-10-11) upstream.
+ - (Bugfix) Fix source_line method.
+ - (Addition) Support <figcaption> element.
  - (Addition) Allow <object> element to appear in <head> if document has an
    HTML4 doctype. This is a willful violation of the HTML5 parsing
    algorithm. (The <object> may have <param> elements as children, as well
@@ -41,11 +52,6 @@ Maintainer:   Toby Inkster <mailto:tobyink@cpan.org>
    looser than the HTML 4 spec which says only <param> should be used, but
    stricter than the HTML 4 DTD which allows pretty much anything in
    there!)
- - (Addition) Support <figcaption> element.
- - (Update) Catch up to revision f2c921a886ab0b3dfb8d21b82525e98a4a921ad4
-   (2010-10-11) upstream.
- - (Addition) Support <summary> element.
- - (Bugfix) Fix source_line method.
 
 0.101  2010-06-30
 
@@ -62,10 +68,10 @@ Maintainer:   Toby Inkster <mailto:tobyink@cpan.org>
 
 0.03  2010-01-15
 
- - (Bugfix) Module didn't use URI::file properly.
  - (Documentation Update) Copyright 2010.
  - (Packaging Update) Upgrade distribution to my new packaging regime
    (auto-generated changelogs, etc)
+ - (Bugfix) Module didn't use URI::file properly.
 
 0.02  2009-12-16
 
