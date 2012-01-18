@@ -10,7 +10,7 @@ use 5.008001;
 use strict;
 #use warnings;
 
-our $VERSION = '0.107';
+our $VERSION = '0.108';
 
 use Error qw(:try);
 use IO::Handle;
@@ -2524,7 +2524,7 @@ sub _tree_construction_main ($) {
         
         $self->{parse_error}->(level => $self->{level}->{must}, type => 'not closed',
                         text => $self->{open_elements}->[-1]->[0]
-                            ->manakai_local_name,
+                            ->localname,
                         token => $token);
 
         #if ($self->{open_elements}->[-1]->[1] == SCRIPT_EL) {

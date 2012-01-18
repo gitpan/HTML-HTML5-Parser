@@ -14,12 +14,12 @@ not run its Makefile.PL or Build.PL.
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-SHA1 95d134e1bd71206f1c77865e7c782607cc8885a9 Changes
-SHA1 25a45e6a71f4964b941bd02ad2494b73b69fb8f0 LICENSE
+SHA1 7f2d5f7eb84e3ea43158afb054705a021dd6f38b Changes
+SHA1 e0f9dca54a6a6eb5553018bfd2ef9f6db3c61d5f LICENSE
 SHA1 e8bdf8f7bd6f16dec356889108d6f95d2bddd684 MANIFEST
-SHA1 c4da673cb0bb45e48909997635cfa67f85c4b40f META.yml
+SHA1 80c482ff495cbe96b3943d0a610d6e022f5c022e META.yml
 SHA1 7150e5e086ef493e1e527a1eeec44a8344b80db6 Makefile.PL
-SHA1 514417ea59e5863c1913dc56620d0090622bc277 README
+SHA1 2efaf7f40c36954744875b21ed1faaa0e6a11daf README
 SHA1 aef0d4d3e351df0490c3575397791fb8067417d6 TODO
 SHA1 36e39ced0c6857bfa999ab5a30efb1d8a742b468 bin/html2xhtml
 SHA1 0255ba1cefd913be82c96d54693a3311533963fa bin/html5debug
@@ -39,21 +39,21 @@ SHA1 b86d0385e10881db680d28bde94f275e49e34a27 inc/Module/Install/TrustMetaYml.pm
 SHA1 1326052d1df1065debee74f9d8583a734b9b3d00 inc/Module/Install/Win32.pm
 SHA1 bb607f3715c40fc3bc1c46496587cdb215bc4fa2 inc/Module/Install/WriteAll.pm
 SHA1 26d58a041cd6b3d21db98b32e8fd1841aae21204 inc/Module/Package.pm
-SHA1 4db02ca3854a0d95bf38139e9b714cc85b618189 inc/Module/Package/Dist/RDF.pm
+SHA1 6b807287940754cc31a3db59f2b22e363d5525be inc/Module/Package/Dist/RDF.pm
 SHA1 775bd24f2fdbb6dce51a8b5b0cdb01fccfce83c4 inc/Scalar/Util.pm
 SHA1 b1b664983568bf822c327599eb88e223483ae96a inc/Scalar/Util/PP.pm
 SHA1 eef6bff62046bff2ce08ba132d0b58fba30f40b4 inc/YAML/Tiny.pm
-SHA1 d3a86bbfc960e8ac1c501ec1b78085f2cbaf0179 lib/HTML/HTML5/Parser.pm
-SHA1 1e3e368c8449996ac046fa840b0686e9c36a82fa lib/HTML/HTML5/Parser/Charset/DecodeHandle.pm
-SHA1 10132cb995136fd9aac48c3a6fd518f748b930ca lib/HTML/HTML5/Parser/Charset/Info.pm
-SHA1 dd708491a230290eadf8edaf01b3c6aa68a1f72e lib/HTML/HTML5/Parser/Charset/UnicodeChecker.pm
-SHA1 44e7bfc74467b357699ae42eaeb9947ddc7f6242 lib/HTML/HTML5/Parser/Charset/UniversalCharDet.pm
-SHA1 798a2160e4ae9171d0daa21dfaf9ff61905f0be8 lib/HTML/HTML5/Parser/Charset/WebLatin1.pm
-SHA1 9dc191a323cddf1328bf7ec8d2457a34d7cb2879 lib/HTML/HTML5/Parser/Charset/WebThai.pm
-SHA1 74558142b136b56d523282175a9aa3709740be78 lib/HTML/HTML5/Parser/Error.pm
-SHA1 0380159ccdd3586b1612dbde28c4b4439602ee4c lib/HTML/HTML5/Parser/TagSoupParser.pm
-SHA1 e0b71c1582dc2007fb07389d08cdc2db66265127 lib/HTML/HTML5/Parser/Tokenizer.pm
-SHA1 0228a00c035dab9ec239984e907205e805a4455c meta/changes.ttl
+SHA1 207ef9001b0120188b443bfca459a915a969dfdb lib/HTML/HTML5/Parser.pm
+SHA1 b0d48894ce11b6c3bbb4b3763786373236cc99b0 lib/HTML/HTML5/Parser/Charset/DecodeHandle.pm
+SHA1 5e0273c6fa24a5aa59164c0136c5a64470e08e31 lib/HTML/HTML5/Parser/Charset/Info.pm
+SHA1 516d5364eaef79f61e229373b6b8a211a0156041 lib/HTML/HTML5/Parser/Charset/UnicodeChecker.pm
+SHA1 61ce072d5689d8cbb552072c4ccd40072bfe327d lib/HTML/HTML5/Parser/Charset/UniversalCharDet.pm
+SHA1 4237c5f117ffece1d5e8b2c54ff9937070b09eb3 lib/HTML/HTML5/Parser/Charset/WebLatin1.pm
+SHA1 7a65c4b7729e8c6dd60bfd83a70ba2fc7e90b6d2 lib/HTML/HTML5/Parser/Charset/WebThai.pm
+SHA1 96d54ae6079ff793852b09303d930b4fa65445ee lib/HTML/HTML5/Parser/Error.pm
+SHA1 4a3cab861bdbd4cb4e6f3c430a38e5ca174cac4a lib/HTML/HTML5/Parser/TagSoupParser.pm
+SHA1 b04bb882b5449fdde5e1a182228e9da8035388bc lib/HTML/HTML5/Parser/Tokenizer.pm
+SHA1 0b1459070ae5426def6e8e9c31b4482b36a0a44c meta/changes.ttl
 SHA1 225231ee459879a71bd63497c73a92cf51a6c36d meta/doap.ttl
 SHA1 4ec77981db4ef6e38aa6b0871b6bec0092ad1186 meta/makefile.ttl
 SHA1 b56593d4d41f4761ee8ade2ea0759670c504f549 t/01basic.t
@@ -61,7 +61,7 @@ SHA1 16920a5e9e70b8d96ddbdc46be5a578746307983 t/02html_4.t
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.10 (GNU/Linux)
 
-iEYEARECAAYFAk6ghIsACgkQzr+BKGoqfTlghACgpg+Ge5a38RM++Z1oUHyt2ufJ
-4PcAoLULX6axWS+a9t6FT2dvS5YnbE4Q
-=Cex3
+iEYEARECAAYFAk8W2uUACgkQzr+BKGoqfTlICwCeKhLvpToQkoBa1TWE0t7nzCru
+lUAAnRf2PwZ8EcwmC+0H9k495Im15uf+
+=11Gl
 -----END PGP SIGNATURE-----
