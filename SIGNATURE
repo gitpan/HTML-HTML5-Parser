@@ -14,12 +14,12 @@ not run its Makefile.PL or Build.PL.
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-SHA1 7f2d5f7eb84e3ea43158afb054705a021dd6f38b Changes
+SHA1 51b4a32ab78913f20e469083e7afab54361bec43 Changes
 SHA1 e0f9dca54a6a6eb5553018bfd2ef9f6db3c61d5f LICENSE
-SHA1 e8bdf8f7bd6f16dec356889108d6f95d2bddd684 MANIFEST
-SHA1 80c482ff495cbe96b3943d0a610d6e022f5c022e META.yml
+SHA1 fe192673292cd45a9652fc89fa298e86fe5c3ca7 MANIFEST
+SHA1 929c1716b2c9805a685f041aa8b7bb7a999fd8da META.yml
 SHA1 7150e5e086ef493e1e527a1eeec44a8344b80db6 Makefile.PL
-SHA1 2efaf7f40c36954744875b21ed1faaa0e6a11daf README
+SHA1 1f759c9cd83a0e1c0340371f051fd8eefa6f667f README
 SHA1 aef0d4d3e351df0490c3575397791fb8067417d6 TODO
 SHA1 36e39ced0c6857bfa999ab5a30efb1d8a742b468 bin/html2xhtml
 SHA1 0255ba1cefd913be82c96d54693a3311533963fa bin/html5debug
@@ -40,28 +40,80 @@ SHA1 1326052d1df1065debee74f9d8583a734b9b3d00 inc/Module/Install/Win32.pm
 SHA1 bb607f3715c40fc3bc1c46496587cdb215bc4fa2 inc/Module/Install/WriteAll.pm
 SHA1 26d58a041cd6b3d21db98b32e8fd1841aae21204 inc/Module/Package.pm
 SHA1 6b807287940754cc31a3db59f2b22e363d5525be inc/Module/Package/Dist/RDF.pm
-SHA1 775bd24f2fdbb6dce51a8b5b0cdb01fccfce83c4 inc/Scalar/Util.pm
-SHA1 b1b664983568bf822c327599eb88e223483ae96a inc/Scalar/Util/PP.pm
+SHA1 e31c281782183601e1e057c5914f63269e043932 inc/Scalar/Util.pm
+SHA1 5eae2f71c45a996a296d2445b18d0589307111f0 inc/Scalar/Util/PP.pm
 SHA1 eef6bff62046bff2ce08ba132d0b58fba30f40b4 inc/YAML/Tiny.pm
-SHA1 207ef9001b0120188b443bfca459a915a969dfdb lib/HTML/HTML5/Parser.pm
-SHA1 b0d48894ce11b6c3bbb4b3763786373236cc99b0 lib/HTML/HTML5/Parser/Charset/DecodeHandle.pm
-SHA1 5e0273c6fa24a5aa59164c0136c5a64470e08e31 lib/HTML/HTML5/Parser/Charset/Info.pm
-SHA1 516d5364eaef79f61e229373b6b8a211a0156041 lib/HTML/HTML5/Parser/Charset/UnicodeChecker.pm
-SHA1 61ce072d5689d8cbb552072c4ccd40072bfe327d lib/HTML/HTML5/Parser/Charset/UniversalCharDet.pm
-SHA1 4237c5f117ffece1d5e8b2c54ff9937070b09eb3 lib/HTML/HTML5/Parser/Charset/WebLatin1.pm
-SHA1 7a65c4b7729e8c6dd60bfd83a70ba2fc7e90b6d2 lib/HTML/HTML5/Parser/Charset/WebThai.pm
-SHA1 96d54ae6079ff793852b09303d930b4fa65445ee lib/HTML/HTML5/Parser/Error.pm
-SHA1 4a3cab861bdbd4cb4e6f3c430a38e5ca174cac4a lib/HTML/HTML5/Parser/TagSoupParser.pm
-SHA1 b04bb882b5449fdde5e1a182228e9da8035388bc lib/HTML/HTML5/Parser/Tokenizer.pm
-SHA1 0b1459070ae5426def6e8e9c31b4482b36a0a44c meta/changes.ttl
+SHA1 8d9bd6e60447c5cfa4e49f798969c84eddd5924e lib/HTML/HTML5/Parser.pm
+SHA1 4e3b089dc2f18519e8aae6c10c2d87a2a3da402b lib/HTML/HTML5/Parser/Charset/DecodeHandle.pm
+SHA1 0267cb6a66c8e05cc71f4d5c4fcfe1c1ee4af151 lib/HTML/HTML5/Parser/Charset/Info.pm
+SHA1 7727b2029957b5c70868ce0902bf17b9eb59326f lib/HTML/HTML5/Parser/Charset/UnicodeChecker.pm
+SHA1 657464e706bca6a7f1e34f148e28e88d0ce3e8fb lib/HTML/HTML5/Parser/Charset/UniversalCharDet.pm
+SHA1 d338c8f3b71c6c1c63dc3707523e6ef21182b874 lib/HTML/HTML5/Parser/Charset/WebLatin1.pm
+SHA1 a98c86e93e1309f9a682fad72e717d818df925b8 lib/HTML/HTML5/Parser/Charset/WebThai.pm
+SHA1 02f46b8d0d4dfecd66420cbf36573bc27976e787 lib/HTML/HTML5/Parser/Error.pm
+SHA1 2585f44ddb21b837a5256017e2c649224cc4a128 lib/HTML/HTML5/Parser/TagSoupParser.pm
+SHA1 2acf9da3b3bd218404ac001031670bc0ff9fd9b0 lib/HTML/HTML5/Parser/Tokenizer.pm
+SHA1 3690812f13d3c5780c4a4f6e10759b137e097f6d meta/changes.ttl
 SHA1 225231ee459879a71bd63497c73a92cf51a6c36d meta/doap.ttl
-SHA1 4ec77981db4ef6e38aa6b0871b6bec0092ad1186 meta/makefile.ttl
-SHA1 b56593d4d41f4761ee8ade2ea0759670c504f549 t/01basic.t
-SHA1 16920a5e9e70b8d96ddbdc46be5a578746307983 t/02html_4.t
+SHA1 b5b451a02d6c909e55252b9570a52322dabf469d meta/makefile.ttl
+SHA1 75ba93bbc48dd80547ab6c928ec31d07aab05636 meta/rt-bugs.ttl
+SHA1 3a498105728ac319558197b0afd8c623d00ff2ed t/01basic.t
+SHA1 6de9cf8e439a0a4a448386f910716e5dbf0e2d8d t/02html5.t
+SHA1 16920a5e9e70b8d96ddbdc46be5a578746307983 t/03html4.t
+SHA1 4f0d1ccbdbd4fd5ce5c3287f9a90e648a1ec186f t/04fragments.t
+SHA1 2b83e48b31920722f348ccd8920986adce42059d t/05origins.t
+SHA1 7ae374be696a8ec9398105c69f8dd5bcdc9b9fa6 t/99html5lib.t
+SHA1 e6e5a36404f093cdf57d3cf360a96f34412bfd0d t/html5lib-fail/domjs-unsafe.dat
+SHA1 b7f94b81a062feccccc320ad0d359d3922ce2527 t/html5lib-fail/entities01.dat
+SHA1 294f7e6b17472f76dd25f70baf3aeec77fcad92f t/html5lib-fail/entities02.dat
+SHA1 dc20b67f5dddb1c510bcd0ed897bb4360ef4a5eb t/html5lib-fail/html5test-com.dat
+SHA1 bfa9e8466f05c3f458ce98103f43b024806e318d t/html5lib-fail/plain-text-unsafe.dat
+SHA1 1881f98a139798f8f7ba88d61bf3cc83c947c156 t/html5lib-fail/tests1.dat
+SHA1 e762377e3673e9156342db8a2c39e2dc26f4cf8e t/html5lib-fail/tests11.dat
+SHA1 b008f25560c67805dac61d4fabe34abfbeffd4b8 t/html5lib-fail/tests14.dat
+SHA1 5debed1629d20da84213147dd60b47a9db1e7e89 t/html5lib-fail/tests16.dat
+SHA1 8913ac300703dd2da9559847346ecb1f0e9a62d2 t/html5lib-fail/tests21.dat
+SHA1 96374cc1c7376924dae67b457c15bb5c4c84fead t/html5lib-fail/tests22.dat
+SHA1 73b86bc207596a884cfecda33bf76e338fd6baed t/html5lib-fail/tests23.dat
+SHA1 c52a4e03cf207bfd21db35033319942a4cad8495 t/html5lib-fail/tests5.dat
+SHA1 5c1e3eca81a421e004868b2be067c59eb64ce0f8 t/html5lib-fail/tests6.dat
+SHA1 aacc3803e59c2f8dcc596f7d78309e926b1abaae t/html5lib-fail/tests9.dat
+SHA1 b833dfdb96281a4278d086f2fd6ee8efcf6b816c t/html5lib-fail/tests_innerHTML_1.dat
+SHA1 69898621c4b7805869227c5e0a582efa08bac9f1 t/html5lib-pass/adoption01.dat
+SHA1 6327fc294e6f8cc5e3384eabd5631374e9eec9da t/html5lib-pass/adoption02.dat
+SHA1 09bfabd914faef1da9447645502ffccc45ad0eed t/html5lib-pass/comments01.dat
+SHA1 25ae1ba311590a0b58d3c74eb5d329c25cf3c65a t/html5lib-pass/doctype01.dat
+SHA1 e726c15952f1cf2b313754eaaaaddb5d89c1bc5a t/html5lib-pass/inbody01.dat
+SHA1 35150ba0e2a10ee3ec9e90226b1918cc925dc53a t/html5lib-pass/isindex.dat
+SHA1 2b88098aecd040ffa244db17501b63b1ff3116a8 t/html5lib-pass/pending-spec-changes-plain-text-unsafe.dat
+SHA1 d6d7e4a8fcabe248398f38a8851255032c563100 t/html5lib-pass/pending-spec-changes.dat
+SHA1 3d98f51cd13989a52f0056b1345052a42bc6d322 t/html5lib-pass/scriptdata01.dat
+SHA1 2785ff3daee2434a396e33ba3a2e0b454a2cad29 t/html5lib-pass/scripted/adoption01.dat
+SHA1 b09e7cc786c2c38b3c25c8f7e2b9a39ab44c7559 t/html5lib-pass/scripted/ark.dat
+SHA1 b67d186fd109193406c916bc3a07035db760ef2a t/html5lib-pass/scripted/webkit01.dat
+SHA1 9ddf73a229514e33af1d15ad8bd444d376f5d9b5 t/html5lib-pass/tables01.dat
+SHA1 1eb200806dfea18342685ca1e7a2420ef7a8bbb3 t/html5lib-pass/tests10.dat
+SHA1 a4d6e45d8672bbced4e0263c7d45e430411d3daa t/html5lib-pass/tests12.dat
+SHA1 aacd3c1b89558aa14aeab622e592e39c400e3407 t/html5lib-pass/tests15.dat
+SHA1 8ed6c24f5fef57a5235a6dd2063e92262d55d27f t/html5lib-pass/tests17.dat
+SHA1 267c6ed51c40b0fcdfdc8b3a7fd4bcfb2e5e577b t/html5lib-pass/tests18.dat
+SHA1 f425496c96b2ad8c9e3448328e299cf2c03bdb6b t/html5lib-pass/tests19.dat
+SHA1 e41f1c5cb3732712f0866aeb5bcc8e04ccc2892c t/html5lib-pass/tests2.dat
+SHA1 06e13e6e717fcc691fa4b1b51d6cf6adb6a7ee6c t/html5lib-pass/tests20.dat
+SHA1 bc2d3e6e8a28acee60e4239db78c5c5516f91fd7 t/html5lib-pass/tests24.dat
+SHA1 f2d17949f7332395f553db1556cbf1f9ffadac59 t/html5lib-pass/tests25.dat
+SHA1 4f94c0d875f7fb73fbccd9ec3d01f70b8b4ac246 t/html5lib-pass/tests26.dat
+SHA1 ba0de70c79bb7d0e75445e84b03022a6dce7ecdc t/html5lib-pass/tests3.dat
+SHA1 a8c1f8ebf5886b0df5002a8f69ceb2405c60c66a t/html5lib-pass/tests4.dat
+SHA1 1a23bbac97d6bf0c34b5d67957183ab001a5a7b0 t/html5lib-pass/tests7.dat
+SHA1 532f635a6b431cbcac37cb9189c1a5a58790b2c0 t/html5lib-pass/tests8.dat
+SHA1 d5d5e56053a73a71f0e89030191efa86a139e9c8 t/html5lib-pass/tricky01.dat
+SHA1 202c121b8890c4b1fc4310cb43ba85b17500b732 t/html5lib-pass/webkit01.dat
+SHA1 42bfb8fbb4aea358f6ab4691c8e143a7bff5357c t/html5lib-pass/webkit02.dat
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.10 (GNU/Linux)
 
-iEYEARECAAYFAk8W2uUACgkQzr+BKGoqfTlICwCeKhLvpToQkoBa1TWE0t7nzCru
-lUAAnRf2PwZ8EcwmC+0H9k495Im15uf+
-=11Gl
+iEYEARECAAYFAk9h92QACgkQzr+BKGoqfTnaUACdGrWPYtSGG0FQDO9tT2EHpHUt
+qLsAn27QH3XJ8RGAMWsM8tfsKTTjW9Wj
+=0RhU
 -----END PGP SIGNATURE-----

@@ -6,6 +6,20 @@ Home page:    <https://metacpan.org/release/HTML-HTML5-Parser>
 Bug tracker:  <http://rt.cpan.org/Dist/Display.html?Queue=HTML-HTML5-Parser>
 Maintainer:   Toby Inkster <mailto:tobyink@cpan.org>
 
+0.109  2012-03-15  # Yes, they are come, but they are not past.
+
+ - (Addition) Nodes now have an implictness flag (returned by source_line
+   called in a list context).
+ - (Addition) Provide dtd_element method to get more information about the
+   DTD.
+ - (Addition) Provide parse_balanced_chunk to parse HTML fragments.
+ - (Bugfix) Fix several fatal errors on infrequently used code paths in
+   TagSoupParser.pm.
+ - (Bugfix) Use correct case for MathML's definitionURL attribute.
+ - (Packaging) Bundle test cases from html5lib.
+ - Make source_line method work more reliably. This requires
+   XML::LibXML::Devel, and thus a fairly recent version of XML-LibXML.
+
 0.108  2012-01-18
 
  - (Bugfix) Crashed when generating an error message about some missing
