@@ -8,25 +8,64 @@ package HTML::HTML5::Parser::TagSoupParser;
 
 use 5.008001;
 use strict;
-#use warnings;
+no warnings;
 
-our $VERSION = '0.109';
+our $VERSION = '0.110';
 
 use Error qw(:try);
 use IO::Handle;
 use HTML::HTML5::Parser::Tokenizer;
 use Scalar::Util qw(blessed);
+use XML::LibXML ':libxml';
 use XML::LibXML::Devel;
 
 BEGIN
 {
-	*XML::LibXML::Element::appendTextFromUnicode = sub {
-		my ($element, $parser, $text) = @_;
-		$text = $parser unless (defined $text or ref $parser);
-		utf8::encode($text);
-		return $element->appendText($text);
-	};
+	if (eval { require XML::LibXML::Devel::SetLineNumber; 1 })
+	{
+		*HAS_XLXDSLN = sub () { 1 };
+	}
+	else
+	{
+		*HAS_XLXDSLN = sub () { 0 };
+	}
 }
+
+*XML::LibXML::Element::appendTextFromUnicode = sub
+{
+	my $element = shift;
+	my $parser  = shift if ref $_[0];
+	my $text    = shift;  utf8::encode($text);
+	my $token   = shift;
+	
+	# This prevents adjacent text nodes.
+	if (defined $element->lastChild
+	and $element->lastChild->nodeType == XML_TEXT_NODE)
+	{
+		$element->appendText($text);
+		return;
+	}
+	
+	my $textnode = XML::LibXML::Text->new($text);
+	
+	if ($token)
+	{
+		DATA($textnode, manakai_source_line => $token->{line})
+			if defined $token->{line};
+		DATA($textnode, manakai_source_column => $token->{column})
+			if defined $token->{column};
+		
+		if (HAS_XLXDSLN
+		and exists $token->{line}
+		and int($token->{line})
+		and int($token->{line}) eq $token->{line})
+		{
+			$textnode->XML::LibXML::Devel::SetLineNumber::set_line_number($token->{line});
+		}
+	}
+	
+	return $element->appendChild($textnode);
+};
 
 our $DATA;
 sub DATA
@@ -46,6 +85,17 @@ sub DATA
 	# for XML::LibXML::Devel, so it might cause failures. We'll see.
 	my $oaddr  = XML::LibXML::Devel::node_from_perl($object);
 	$DATA->{$oaddr} ||= {};
+		
+	if (HAS_XLXDSLN
+	and defined $k
+	and $k eq 'manakai_source_line'
+	and defined $v
+	and int($v)
+	and int($v) eq $v
+	and $object->nodeType == XML_ELEMENT_NODE) # does not work well for attrs
+	{
+		$object->XML::LibXML::Devel::SetLineNumber::set_line_number($v);
+	}
   
 	$DATA->{$oaddr}{$k} = $v if $argc==3;
 	return $DATA->{$oaddr}{$k} if $argc==2;
@@ -70,12 +120,12 @@ sub DATA
 
 ## Namespace URLs
 
-sub HTML_NS ()  { q<http://www.w3.org/1999/xhtml> }
-sub MML_NS ()   { q<http://www.w3.org/1998/Math/MathML> }
-sub SVG_NS ()   { q<http://www.w3.org/2000/svg> }
-sub XLINK_NS () { q<http://www.w3.org/1999/xlink> }
-sub XML_NS ()   { q<http://www.w3.org/XML/1998/namespace> }
-sub XMLNS_NS () { q<http://www.w3.org/2000/xmlns/> }
+sub HTML_NS ()  { q <http://www.w3.org/1999/xhtml> }
+sub MML_NS ()   { q <http://www.w3.org/1998/Math/MathML> }
+sub SVG_NS ()   { q <http://www.w3.org/2000/svg> }
+sub XLINK_NS () { q <http://www.w3.org/1999/xlink> }
+sub XML_NS ()   { q <http://www.w3.org/XML/1998/namespace> }
+sub XMLNS_NS () { q <http://www.w3.org/2000/xmlns/> }
 
 ## Element categories
 
@@ -1210,8 +1260,12 @@ sub _tree_construction_initial ($) {
       return;
     } elsif ($token->{type} == COMMENT_TOKEN) {
       
-      my $comment = $self->{document}->createComment ($token->{data});
-      $self->{document}->appendChild ($comment);
+      my $comment = $self->{document}->createComment($token->{data});
+		DATA($comment, manakai_source_line => $token->{line})
+			if defined $token->{line};
+		DATA($comment, manakai_source_column => $token->{column})
+			if defined $token->{column};
+      $self->{document}->appendChild($comment);
       
       ## Stay in the insertion mode.
       $token = $self->_get_next_token;
@@ -1238,8 +1292,12 @@ sub _tree_construction_root_element ($) {
         redo B;
       } elsif ($token->{type} == COMMENT_TOKEN) {
         
-        my $comment = $self->{document}->createComment ($token->{data});
-        $self->{document}->appendChild ($comment);
+        my $comment = $self->{document}->createComment($token->{data});
+			DATA($comment, manakai_source_line => $token->{line})
+				if defined $token->{line};
+			DATA($comment, manakai_source_column => $token->{column})
+				if defined $token->{column};
+        $self->{document}->appendChild($comment);
         ## Stay in the insertion mode.
         $token = $self->_get_next_token;
         redo B;
@@ -1844,7 +1902,7 @@ sub _reset_insertion_mode ($) {
           $i = $_;
         }
       } # AFE
-      splice @$active_formatting_elements, $i + 1, 0, $new_element;
+      splice @$active_formatting_elements, (defined $i ? $i : 0) + 1, 0, $new_element;
       
       ## Step 15
       undef $i;
@@ -2087,7 +2145,7 @@ sub _tree_construction_main ($) {
         while ($data =~ s/\x00/\x{FFFD}/) {
           $self->{parse_error}->(level => $self->{level}->{must}, type => 'NULL', token => $token);
         }
-        $self->{open_elements}->[-1]->[0]->appendTextFromUnicode($self, $data);
+        $self->{open_elements}->[-1]->[0]->appendTextFromUnicode($self, $data, $token);
         if ($data =~ /[^\x09\x0A\x0C\x0D\x20]/) {
           delete $self->{frameset_ok};        
         }
@@ -2332,7 +2390,11 @@ sub _tree_construction_main ($) {
 
       } elsif ($token->{type} == COMMENT_TOKEN) {
         ## "In foreign content", comment token.
-        my $comment = $self->{document}->createComment ($token->{data});
+        my $comment = $self->{document}->createComment($token->{data});
+			DATA($comment, manakai_source_line => $token->{line})
+				if defined $token->{line};
+			DATA($comment, manakai_source_column => $token->{column})
+				if defined $token->{column};
         $self->{open_elements}->[-1]->[0]->appendChild ($comment);
         $token = $self->_get_next_token;
         next B;
@@ -2373,7 +2435,7 @@ sub _tree_construction_main ($) {
               #
             } else {
               
-              $self->{open_elements}->[-1]->[0]->appendTextFromUnicode($self, $s);
+              $self->{open_elements}->[-1]->[0]->appendTextFromUnicode($self, $s, $token);
               last C;
             }
           } else {
@@ -2409,7 +2471,7 @@ sub _tree_construction_main ($) {
           $foster_parent_element ||= $self->{open_elements}->[0]->[0];          
           
           $foster_parent_element->insertBefore
-              ($self->{document}->createTextNode ($s), $next_sibling);
+              ($self->{document}->createTextNode($s), $next_sibling);
 
           $open_tables->[-1]->[1] = 1; # tainted
           $open_tables->[-1]->[2] = 1; # ~node inserted
@@ -2462,6 +2524,10 @@ sub _tree_construction_main ($) {
       next B;
     } elsif ($token->{type} == COMMENT_TOKEN) {
       my $comment = $self->{document}->createComment ($token->{data});
+		DATA($comment, manakai_source_line => $token->{line})
+			if defined $token->{line};
+		DATA($comment, manakai_source_column => $token->{column})
+			if defined $token->{column};
       if ($self->{insertion_mode} & AFTER_HTML_IMS) {
         
         $self->{document}->appendChild ($comment);
@@ -2483,7 +2549,7 @@ sub _tree_construction_main ($) {
 			  
           ## NOTE: NULLs are replaced into U+FFFDs in tokenizer.
           $self->{open_elements}->[-1]->[0]->appendTextFromUnicode
-              ($self, $token->{data});
+              ($self, $token->{data}, $token);
         } else {
           
         }
@@ -2566,7 +2632,7 @@ sub _tree_construction_main ($) {
         if ($token->{data} =~ s/^([\x09\x0A\x0C\x20]+)//) {
           unless ($self->{insertion_mode} == BEFORE_HEAD_IM) {
             
-            $self->{open_elements}->[-1]->[0]->appendTextFromUnicode($self, $1);
+            $self->{open_elements}->[-1]->[0]->appendTextFromUnicode($self, $1, $token);
           } else {
             
             ## Ignore the token.
@@ -3432,7 +3498,7 @@ sub _tree_construction_main ($) {
         $reconstruct_active_formatting_elements
           ->($self, $insert_to_current, $active_formatting_elements, $open_tables);
         
-        $self->{open_elements}->[-1]->[0]->appendTextFromUnicode($self, $token->{data});
+        $self->{open_elements}->[-1]->[0]->appendTextFromUnicode($self, $token->{data}, $token);
 
         if ($self->{frameset_ok} and
             $token->{data} =~ /[^\x09\x0A\x0C\x0D\x20]/) {
@@ -4601,7 +4667,7 @@ sub _tree_construction_main ($) {
     } elsif (($self->{insertion_mode} & IM_MASK) == IN_COLUMN_GROUP_IM) {
           if ($token->{type} == CHARACTER_TOKEN) {
             if ($token->{data} =~ s/^([\x09\x0A\x0C\x20]+)//) {
-              $self->{open_elements}->[-1]->[0]->appendTextFromUnicode($self, $1);
+              $self->{open_elements}->[-1]->[0]->appendTextFromUnicode($self, $1, $token);
               unless (length $token->{data}) {
                 
                 $token = $self->_get_next_token;
@@ -4716,7 +4782,7 @@ sub _tree_construction_main ($) {
         while ($data =~ s/\x00//) {
           $self->{parse_error}->(level => $self->{level}->{must}, type => 'NULL', token => $token);
         }
-        $self->{open_elements}->[-1]->[0]->appendTextFromUnicode($self, $data)
+        $self->{open_elements}->[-1]->[0]->appendTextFromUnicode($self, $data, $token)
             if $data ne '';
         $token = $self->_get_next_token;
         next B;
@@ -5050,7 +5116,7 @@ sub _tree_construction_main ($) {
           $reconstruct_active_formatting_elements
 				->($self, $insert_to_current, $active_formatting_elements, $open_tables);
               
-          $self->{open_elements}->[-1]->[0]->appendTextFromUnicode($self, $1);
+          $self->{open_elements}->[-1]->[0]->appendTextFromUnicode($self, $1, $token);
           
           unless (length $token->{data}) {
             
@@ -5138,7 +5204,7 @@ sub _tree_construction_main ($) {
     } elsif ($self->{insertion_mode} & FRAME_IMS) {
       if ($token->{type} == CHARACTER_TOKEN) {
         if ($token->{data} =~ s/^([\x09\x0A\x0C\x20]+)//) {
-          $self->{open_elements}->[-1]->[0]->appendTextFromUnicode($self, $1);
+          $self->{open_elements}->[-1]->[0]->appendTextFromUnicode($self, $1, $token);
           
           unless (length $token->{data}) {
             
@@ -6013,7 +6079,7 @@ sub _tree_construction_main ($) {
             $attr->setValue($attr_t->{value});
             DATA($attr, manakai_source_line => $attr_t->{line});
             DATA($attr, manakai_source_column => $attr_t->{column});
-            $el->setAttributeNodeNS ($attr);
+            $el->setAttributeNodeNS($attr);
           }
         }
       

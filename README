@@ -298,8 +298,17 @@ DESCRIPTION
         number.) The implictness indicator is a new feature, and I'd
         appreciate any bug reports where it gets things wrong.
 
+        XML::LibXML::Node has a "line_number" method. In general this will
+        always return 0 and HTML::HTML5::Parser has no way of influencing
+        it. However, if you install XML::LibXML::Devel::SetLineNumber on
+        your system, the "line_number" method will start working (at least
+        for elements).
+
 SEE ALSO
-    <http://suika.fam.cx/www/markup/html/whatpm/Whatpm/HTML.html>
+    <http://suika.fam.cx/www/markup/html/whatpm/Whatpm/HTML.html>.
+
+    HTML::HTML5::Writer, HTML::HTML5::Builder, XML::LibXML,
+    XML::LibXML::PrettyPrint, XML::LibXML::Devel::SetLineNumber.
 
 AUTHOR
     Toby Inkster, <tobyink@cpan.org>

@@ -39,12 +39,14 @@ meta/changes.ttl
 meta/doap.ttl
 meta/makefile.ttl
 meta/rt-bugs.ttl
+NEWS
 README
 t/01basic.t
 t/02html5.t
 t/03html4.t
 t/04fragments.t
 t/05origins.t
+t/06xlxdsln.t
 t/99html5lib.t
 t/html5lib-fail/domjs-unsafe.dat
 t/html5lib-fail/entities01.dat

@@ -6,6 +6,14 @@ Home page:    <https://metacpan.org/release/HTML-HTML5-Parser>
 Bug tracker:  <http://rt.cpan.org/Dist/Display.html?Queue=HTML-HTML5-Parser>
 Maintainer:   Toby Inkster <mailto:tobyink@cpan.org>
 
+0.110  2012-03-20
+
+ - (Bugfix) Removed a use of smart match which was breaking Perl 5.8.x
+   compatibility.
+ - Comment nodes should now keep their line numbers and column numbers.
+ - Text nodes should keep line numbers and column numbers too.
+ - use XML::LibXML::Devel::SetLineNumber if it is available.
+
 0.109  2012-03-15  # Yes, they are come, but they are not past.
 
  - (Addition) Nodes now have an implictness flag (returned by source_line
