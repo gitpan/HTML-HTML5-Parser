@@ -273,6 +273,11 @@ DESCRIPTION
         This may be called as a class or object method. (It makes no
         difference.)
 
+    "charset"
+          $charset = $parser->charset( $doc );
+
+        The character set apparently used by the document.
+
     "source_line"
           ($line, $col) = $parser->source_line( $node );
           $line = $parser->source_line( $node );

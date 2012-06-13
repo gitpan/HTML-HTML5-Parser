@@ -1,6 +1,10 @@
 bin/html2xhtml
 bin/html5debug
 Changes
+examples/charsets.pl
+examples/html/iso-8859-15.html
+examples/html/utf-16.html
+examples/html/utf-8.html
 inc/Module/AutoInstall.pm
 inc/Module/Install.pm
 inc/Module/Install/AutoInstall.pm
@@ -20,6 +24,7 @@ inc/Module/Package.pm
 inc/Module/Package/Dist/RDF.pm
 inc/Scalar/Util.pm
 inc/Scalar/Util/PP.pm
+inc/unicore/Name.pm
 inc/YAML/Tiny.pm
 lib/HTML/HTML5/Parser.pm
 lib/HTML/HTML5/Parser/Charset/DecodeHandle.pm
@@ -49,9 +54,7 @@ t/05origins.t
 t/06xlxdsln.t
 t/99html5lib.t
 t/html5lib-fail/domjs-unsafe.dat
-t/html5lib-fail/entities01.dat
 t/html5lib-fail/entities02.dat
-t/html5lib-fail/html5test-com.dat
 t/html5lib-fail/plain-text-unsafe.dat
 t/html5lib-fail/tests1.dat
 t/html5lib-fail/tests11.dat
@@ -68,6 +71,8 @@ t/html5lib-pass/adoption01.dat
 t/html5lib-pass/adoption02.dat
 t/html5lib-pass/comments01.dat
 t/html5lib-pass/doctype01.dat
+t/html5lib-pass/entities01.dat
+t/html5lib-pass/html5test-com.dat
 t/html5lib-pass/inbody01.dat
 t/html5lib-pass/isindex.dat
 t/html5lib-pass/pending-spec-changes-plain-text-unsafe.dat

@@ -4,12 +4,13 @@ author:
   - 'Toby Inkster <tobyink@cpan.org>'
   - Wakaba
 build_requires:
-  ExtUtils::MakeMaker: 6.42
+  ExtUtils::MakeMaker: 6.59
   Test::More: 0.61
 configure_requires:
-  ExtUtils::MakeMaker: 6.42
+  ExtUtils::MakeMaker: 6.59
 distribution_type: module
-generated_by: 'Module::Install version 1.02'
+dynamic_config: 1
+generated_by: 'Module::Install version 1.06'
 keywords:
   - HTML
   - HTML5
@@ -22,16 +23,17 @@ module_name: HTML::HTML5::Parser
 name: HTML-HTML5-Parser
 no_index:
   directory:
+    - examples
     - inc
     - t
     - xt
 requires:
-  Error: 0
-  HTML::Encoding: 0.55
-  HTML::HTML5::Entities: 0.001
+  HTML::HTML5::Entities: 0.002
+  IO::HTML: 0
   LWP::UserAgent: 0
   Scalar::Util: 0
-  XML::LibXML: 1.90
+  Try::Tiny: 0
+  XML::LibXML: 1.94
   XML::LibXML::Devel: 0
   perl: 5.8.1
 resources:
@@ -39,4 +41,4 @@ resources:
   homepage: https://metacpan.org/release/HTML-HTML5-Parser
   license: http://dev.perl.org/licenses/
   repository: http://goddamn.co.uk/svn-web/perlmods/browse/HTML-HTML5-Parser/
-version: 0.110
+version: 0.200

@@ -5,7 +5,7 @@ use strict;
 use warnings;
 
 our $AUTOLOAD;
-our $VERSION = '0.110';
+our $VERSION = '0.200';
 
 use Carp;
 use HTML::HTML5::Parser::Error;
@@ -117,7 +117,7 @@ sub parse_string
 	$opts->{'parser_used'} = 'HTML::HTML5::Parser';
 	my $dom = XML::LibXML::Document->createDocument;
 	
-	if (defined $opts->{'encoding'} || 1)
+	if (defined $opts->{'encoding'}||1)
 	{
 		HTML::HTML5::Parser::TagSoupParser->parse_byte_string($opts->{'encoding'}, $text, $dom, sub{
 			my $err = HTML::HTML5::Parser::Error->new(@_);
@@ -184,7 +184,9 @@ sub parse_balanced_chunk
 {
 	my ($self, $chunk, $o) = @_;
 	my %options = %{ $o || {} };
-
+	
+	$options{as} = 'default' unless defined $options{as};
+	
 	my $w = $options{force_within} || $options{within} || 'div';
 	my $ancestors = $within{ lc $w };
 	croak "Cannot parse chunk as if within $w."
@@ -368,6 +370,14 @@ sub compat_mode
 	my $node = shift;
 	
 	return HTML::HTML5::Parser::TagSoupParser::DATA($node)->{'manakai_compat_mode'};
+}
+
+sub charset
+{
+	my $self = shift;
+	my $node = shift;
+	
+	return HTML::HTML5::Parser::TagSoupParser::DATA($node)->{'charset'};
 }
 
 sub dtd_public_id
@@ -729,6 +739,12 @@ Returns 'quirks', 'limited quirks' or undef (standards mode).
 
 This may be called as a class or object method. (It makes
 no difference.)
+
+=item C<charset>
+
+  $charset = $parser->charset( $doc );
+
+The character set apparently used by the document.
 
 =item C<source_line>
 
