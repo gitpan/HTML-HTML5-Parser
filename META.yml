@@ -29,8 +29,8 @@ no_index:
     - xt
 requires:
   HTML::HTML5::Entities: 0.002
+  HTTP::Tiny: 0
   IO::HTML: 0
-  LWP::UserAgent: 0
   Scalar::Util: 0
   Try::Tiny: 0
   XML::LibXML: 1.94
@@ -41,4 +41,4 @@ resources:
   homepage: https://metacpan.org/release/HTML-HTML5-Parser
   license: http://dev.perl.org/licenses/
   repository: http://goddamn.co.uk/svn-web/perlmods/browse/HTML-HTML5-Parser/
-version: 0.200
+version: 0.201_01

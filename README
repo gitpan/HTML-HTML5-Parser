@@ -42,8 +42,8 @@ DESCRIPTION
         $html_file_name can be either a filename or an URL.
 
         Options include 'encoding' to indicate file encoding (e.g. 'utf-8')
-        and 'user_agent' which should be a blessed "LWP::UserAgent" object
-        to be used when retrieving URLs.
+        and 'user_agent' which should be a blessed "LWP::UserAgent" (or
+        HTTP::Tiny) object to be used when retrieving URLs.
 
         If requesting a URL and the response Content-Type header indicates
         an XML-based media type (such as XHTML), XML::LibXML::Parser will be

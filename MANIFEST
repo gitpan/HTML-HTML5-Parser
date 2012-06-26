@@ -36,6 +36,7 @@ lib/HTML/HTML5/Parser/Charset/WebThai.pm
 lib/HTML/HTML5/Parser/Error.pm
 lib/HTML/HTML5/Parser/TagSoupParser.pm
 lib/HTML/HTML5/Parser/Tokenizer.pm
+lib/HTML/HTML5/Parser/UA.pm
 LICENSE
 Makefile.PL
 MANIFEST			This list of files
@@ -52,6 +53,8 @@ t/03html4.t
 t/04fragments.t
 t/05origins.t
 t/06xlxdsln.t
+t/07ua.t
+t/08ua-lwp.t
 t/99html5lib.t
 t/html5lib-fail/domjs-unsafe.dat
 t/html5lib-fail/entities02.dat
@@ -100,5 +103,6 @@ t/html5lib-pass/tests8.dat
 t/html5lib-pass/tricky01.dat
 t/html5lib-pass/webkit01.dat
 t/html5lib-pass/webkit02.dat
+t/lib/Test/HTTP/Server.pm
 TODO
 SIGNATURE                                Public-key signature (added by MakeMaker)

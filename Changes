@@ -6,6 +6,11 @@ Home page:    <https://metacpan.org/release/HTML-HTML5-Parser>
 Bug tracker:  <http://rt.cpan.org/Dist/Display.html?Queue=HTML-HTML5-Parser>
 Maintainer:   Toby Inkster <mailto:tobyink@cpan.org>
 
+0.201_01  2012-06-27
+
+ - Drop dependency on LWP::UserAgent in favour of HTTP::Tiny which is part
+   of core since 5.14.
+
 0.200  2012-06-13
 
  - Drop dependency on Error.pm; use Try::Tiny instead.
