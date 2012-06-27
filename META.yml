@@ -33,6 +33,7 @@ requires:
   IO::HTML: 0
   Scalar::Util: 0
   Try::Tiny: 0
+  URI::file: 0
   XML::LibXML: 1.94
   XML::LibXML::Devel: 0
   perl: 5.8.1
@@ -41,4 +42,4 @@ resources:
   homepage: https://metacpan.org/release/HTML-HTML5-Parser
   license: http://dev.perl.org/licenses/
   repository: http://goddamn.co.uk/svn-web/perlmods/browse/HTML-HTML5-Parser/
-version: 0.201_01
+version: 0.201_02
