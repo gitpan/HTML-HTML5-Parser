@@ -23,8 +23,8 @@ inc/Module/Install/WriteAll.pm
 inc/Module/Package.pm
 inc/Module/Package/Dist/RDF.pm
 inc/Scalar/Util.pm
-inc/Scalar/Util/PP.pm
 inc/unicore/Name.pm
+inc/utf8.pm
 inc/YAML/Tiny.pm
 lib/HTML/HTML5/Parser.pm
 lib/HTML/HTML5/Parser/Charset/DecodeHandle.pm
@@ -104,5 +104,6 @@ t/html5lib-pass/tricky01.dat
 t/html5lib-pass/webkit01.dat
 t/html5lib-pass/webkit02.dat
 t/lib/Test/HTTP/Server.pm
+t/rt-79019.t
 TODO
 SIGNATURE                                Public-key signature (added by MakeMaker)
