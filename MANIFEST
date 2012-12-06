@@ -1,6 +1,7 @@
 bin/html2xhtml
 bin/html5debug
 Changes
+COPYRIGHT
 examples/charsets.pl
 examples/html/iso-8859-15.html
 examples/html/utf-16.html
