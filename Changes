@@ -6,10 +6,20 @@ Home page:    <https://metacpan.org/release/HTML-HTML5-Parser>
 Bug tracker:  <http://rt.cpan.org/Dist/Display.html?Queue=HTML-HTML5-Parser>
 Maintainer:   Toby Inkster <mailto:tobyink@cpan.org>
 
+0.300  2012-12-06
+
+ - (Bugfix) Fix many major memory leaks.
+   ++$DORIAN
+ - (Packaging) t/99html5lib.t now uses Moo instead of Mo.
+ - Memory leak fix necessitated some API changes; in particular some
+   methods which were available as class methods are now object methods
+   only.
+
 0.208  2012-12-06
 
  - (Bugfix) If two <html> tags were in the same file, attributes on the
    second <html> element could cause crashes.
+   Fixes RT#79019
    ++"Luben Karavelov"
  - (Bugfix) Minor fix re LWP-independence.
 
@@ -40,6 +50,7 @@ Maintainer:   Toby Inkster <mailto:tobyink@cpan.org>
 
  - (Bugfix) Removed a use of smart match which was breaking Perl 5.8.x
    compatibility.
+   Fixes RT#75809
  - Comment nodes should now keep their line numbers and column numbers.
  - Text nodes should keep line numbers and column numbers too.
  - use XML::LibXML::Devel::SetLineNumber if it is available.

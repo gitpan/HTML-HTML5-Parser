@@ -1,11 +1,12 @@
 package HTML::HTML5::Parser;
 
+## skip Test::Tabs
 use 5.008001;
 use strict;
 use warnings;
 
 our $AUTOLOAD;
-our $VERSION = '0.208';
+our $VERSION = '0.300';
 
 use Carp;
 use HTML::HTML5::Parser::Error;
@@ -22,10 +23,11 @@ BEGIN {
 sub new
 {
 	my $class = shift;
+    my %p = @_;
 	my $self  = bless {
-		'errors' => [],
+		errors => [],
+        parser => HTML::HTML5::Parser::TagSoupParser->new(%p),
 		}, $class;
-	
 	return $self;
 }
 
@@ -91,22 +93,26 @@ sub parse_string
 	my $self = shift;
 	my $text = shift;
 	my $opts = shift || {};
-	
+
 	$self->{'errors'} = [];
 	$opts->{'parser_used'} = 'HTML::HTML5::Parser';
 	my $dom = XML::LibXML::Document->createDocument;
-	
+
 	if (defined $opts->{'encoding'}||1)
 	{
-		HTML::HTML5::Parser::TagSoupParser->parse_byte_string($opts->{'encoding'}, $text, $dom, sub{
-			my $err = HTML::HTML5::Parser::Error->new(@_);
-			$self->{error_handler}->($err) if $self->{error_handler};
-			push @{$self->{'errors'}}, $err;
+        # XXX AGAIN DO THIS TO STOP ENORMOUS MEMORY LEAKS
+        my ($errh, $errors) = @{$self}{qw(error_handler errors)};
+		$self->{parser}->parse_byte_string(
+            $opts->{'encoding'}, $text, $dom,
+            sub {
+                my $err = HTML::HTML5::Parser::Error->new(@_);
+                $errh->($err) if $errh;
+                push @$errors, $err;
 			});
 	}
 	else
 	{
-		HTML::HTML5::Parser::TagSoupParser->parse_char_string($text, $dom, sub{
+		$self->{parser}->parse_char_string($text, $dom, sub{
 			my $err = HTML::HTML5::Parser::Error->new(@_);
 			$self->{error_handler}->($err) if $self->{error_handler};
 			push @{$self->{'errors'}}, $err;
@@ -348,7 +354,7 @@ sub compat_mode
 	my $self = shift;
 	my $node = shift;
 	
-	return HTML::HTML5::Parser::TagSoupParser::DATA($node)->{'manakai_compat_mode'};
+	return $self->{parser}->_data($node)->{'manakai_compat_mode'};
 }
 
 sub charset
@@ -356,7 +362,7 @@ sub charset
 	my $self = shift;
 	my $node = shift;
 	
-	return HTML::HTML5::Parser::TagSoupParser::DATA($node)->{'charset'};
+	return $self->{parser}->_data($node)->{'charset'};
 }
 
 sub dtd_public_id
@@ -364,7 +370,7 @@ sub dtd_public_id
 	my $self = shift;
 	my $node = shift;
 	
-	return HTML::HTML5::Parser::TagSoupParser::DATA($node)->{'DTD_PUBLIC_ID'};
+	return $self->{parser}->_data($node)->{'DTD_PUBLIC_ID'};
 }
 
 sub dtd_system_id
@@ -372,7 +378,7 @@ sub dtd_system_id
 	my $self = shift;
 	my $node = shift;
 	
-	return HTML::HTML5::Parser::TagSoupParser::DATA($node)->{'DTD_SYSTEM_ID'};
+	return $self->{parser}->_data($node)->{'DTD_SYSTEM_ID'};
 }
 
 sub dtd_element
@@ -380,22 +386,24 @@ sub dtd_element
 	my $self = shift;
 	my $node = shift;
 	
-	return HTML::HTML5::Parser::TagSoupParser::DATA($node)->{'DTD_ELEMENT'};
+	return $self->{parser}->_data($node)->{'DTD_ELEMENT'};
 }
 
 sub source_line
 {
 	my $self = shift;
 	my $node = shift;
-	
-	my $line = HTML::HTML5::Parser::TagSoupParser::DATA($node)->{'manakai_source_line'};
-	
+
+    my $data = ref $self ? $self->{parser}->_data($node) :
+        HTML::HTML5::Parser::TagSoupParser::DATA($node);
+	my $line = $data->{'manakai_source_line'};
+
 	if (wantarray)
 	{
 		return (
 			$line,
-			HTML::HTML5::Parser::TagSoupParser::DATA($node)->{'manakai_source_column'},
-			(HTML::HTML5::Parser::TagSoupParser::DATA($node)->{'implied'} || 0),
+			$data->{'manakai_source_column'},
+			($data->{'implied'} || 0),
 			);
 	}
 	else
@@ -407,6 +415,22 @@ sub source_line
 sub DESTROY {}
 
 __END__
+
+=pod
+
+=encoding utf8
+
+=begin stopwords
+
+XML::LibXML-like
+XML::LibXML-Compatible
+'utf-8')
+foobar
+doctype:
+html
+implictness
+
+=end stopwords
 
 =head1 NAME
 
@@ -449,8 +473,15 @@ Changes include:
 =item C<new>
 
   $parser = HTML::HTML5::Parser->new;
+  # or
+  $parser = HTML::HTML5::Parser->new(no_cache => 1);
 
-The constructor does not do anything interesting.
+The constructor does nothing interesting besides take one flag
+argument, C<no_cache =E<gt> 1>, to disable the global element metadata
+cache. Disabling the cache is handy for conserving memory if you parse
+a large number of documents, however, class methods such as
+C</source_line> will not work, and must be run from an instance of
+this parser.
 
 =back
 
@@ -515,7 +546,7 @@ HTML5 parsing; C<load_html> just goes straight for HTML5.
 
   $fragment = $parser->parse_balanced_chunk( $string [,\%opts] );
 
-This method is roughly equivlaent to XML::LibXML's method of the same
+This method is roughly equivalent to XML::LibXML's method of the same
 name, but unlike XML::LibXML, and despite its name it does not require
 the chunk to be "balanced". This method is somewhat black magic, but
 should work, and do the proper thing in most cases. Of course, the
@@ -676,9 +707,6 @@ For an XML::LibXML::Document which has been returned by
 HTML::HTML5::Parser, using this method will tell you the
 Public Identifier of the DTD used (if any).
 
-This may be called as a class or object method. (It makes
-no difference.)
-
 =item C<dtd_system_id>
 
   $sysid = $parser->dtd_system_id( $doc );
@@ -687,13 +715,10 @@ For an XML::LibXML::Document which has been returned by
 HTML::HTML5::Parser, using this method will tell you the
 System Identifier of the DTD used (if any).
 
-This may be called as a class or object method. (It makes
-no difference.)
-
 =item C<dtd_element>
 
   $element = $parser->dtd_element( $doc );
-  
+
 For an XML::LibXML::Document which has been returned by
 HTML::HTML5::Parser, using this method will tell you the
 root element declared in the DTD used (if any). That is,
@@ -707,17 +732,11 @@ This may return the empty string if a DTD was present but
 did not contain a root element; or undef if no DTD was
 present.
 
-This may be called as a class or object method. (It makes
-no difference.)
-
 =item C<compat_mode>
 
   $mode = $parser->compat_mode( $doc );
   
 Returns 'quirks', 'limited quirks' or undef (standards mode).
-
-This may be called as a class or object method. (It makes
-no difference.)
 
 =item C<charset>
 
@@ -729,7 +748,7 @@ The character set apparently used by the document.
 
   ($line, $col) = $parser->source_line( $node );
   $line = $parser->source_line( $node );
-  
+
 In scalar context, C<source_line> returns the line number of the
 source code that started a particular node (element, attribute or
 comment).
@@ -738,7 +757,7 @@ In list context, returns a tuple: $line, $column, $implicitness.
 Tab characters count as one column, not eight.
 
 $implicitness indicates that the node was not explicitly marked
-up in the source code, but its existance was inferred by the parser.
+up in the source code, but its existence was inferred by the parser.
 For example, in the following markup, the HTML, TITLE and P elements
 are explicit, but the HEAD and BODY elements are implicit.
 
