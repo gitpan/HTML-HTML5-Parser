@@ -226,11 +226,11 @@ BEGIN {
 {
 	package Local::HTML5Lib::TestFile;
 	
-	use Mo;
+	use Moo;
 	
-	has filename   => (isa => 'Str');
-	has tests      => (isa => 'ArrayRef');
-	has last_score => (isa => 'Num');
+	has filename   => (is => "rw");
+	has tests      => (is => "rw");
+	has last_score => (is => "rw");
 	
 	sub read_file
 	{

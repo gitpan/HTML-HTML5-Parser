@@ -68,6 +68,7 @@ dist:project
 	doap:release      dist:v_0-206;
 	doap:release      dist:v_0-208;
 	doap:release      dist:v_0-300;
+	doap:release      dist:v_0-301;
 	doap:repository   [
 		a doap:SVNRepository;
 		doap:browse <http://goddamn.co.uk/svn-web/perlmods/browse/HTML-HTML5-Parser/>;
@@ -461,7 +462,7 @@ dist:v_0-208
 
 dist:v_0-300
 	a                 doap:Version;
-	dc:issued         "2012-12-06"^^xsd:date;
+	dc:issued         "2013-07-06"^^xsd:date;
 	dcs:changeset     [
 		dcs:item [
 			a dcs:Bugfix;
@@ -484,6 +485,24 @@ dist:v_0-300
 	];
 	doap:file-release <http://backpan.cpan.org/authors/id/T/TO/TOBYINK/HTML-HTML5-Parser-0.300.tar.gz>;
 	doap:revision     "0.300"^^xsd:string.
+
+dist:v_0-301
+	a                 doap:Version;
+	dc:issued         "2013-07-08"^^xsd:date;
+	dcs:changeset     [
+		dcs:item [
+			a dcs:Bugfix;
+			rdfs:label "Fix t/99html5lib.t still using Mo in one place."@en;
+			dcs:fixes <http://purl.org/NET/cpan-uri/rt/ticket/86774>;
+			dcs:thanks [
+				foaf:name "Fitz Elliott";
+				foaf:mbox <mailto:fitz.elliott@gmail.com>;
+			];
+		];
+		dcs:versus dist:v_0-300;
+	];
+	doap:file-release <http://backpan.cpan.org/authors/id/T/TO/TOBYINK/HTML-HTML5-Parser-0.301.tar.gz>;
+	doap:revision     "0.301"^^xsd:string.
 
 dist:dev-wakaba
 	a                 foaf:Person;

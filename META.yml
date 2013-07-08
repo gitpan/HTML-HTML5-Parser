@@ -42,10 +42,10 @@ resources:
   homepage: https://metacpan.org/release/HTML-HTML5-Parser
   license: http://dev.perl.org/licenses/
   repository: http://goddamn.co.uk/svn-web/perlmods/browse/HTML-HTML5-Parser/
-version: 0.300
+version: 0.301
 x_contributors:
   - shellac
-  - 'Dorian Taylor'
   - 'audreyt <audreyt@cpan.org>'
   - TOBYINK
   - Wakaba
+  - 'Dorian Taylor'
